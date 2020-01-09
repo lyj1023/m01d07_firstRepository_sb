@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Configuration 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.hqyj.sb.modules.test.dao.TestDao">
+    <select id="getCityByCityId2" parameterType="java.lang.Integer" resultType="City">
+        select * from m_city where city_id=#{cityId}
+    </select>
+</mapper>

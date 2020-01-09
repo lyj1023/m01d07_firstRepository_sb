@@ -7,11 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.hqyj.sb.modules.test.entity.City;
 import com.hqyj.sb.modules.test.entity.Country;
 import com.hqyj.sb.modules.test.service.TestService;
@@ -101,5 +107,35 @@ public class TestContoller {
 	@ResponseBody
 	public Country getCountryByCountryName(@RequestParam String countryName) {
 		return testService.getCountryByCountryName(countryName);
+	}
+
+	// ################################################################
+	@RequestMapping("/cities/{currentPage}/{pageSize}")
+	@ResponseBody
+	public PageInfo<City> getCitiesByPage(@PathVariable int currentPage, @PathVariable int pageSize) {
+		return testService.getCitiesByPage(currentPage, pageSize);
+	}
+
+	// ################################################################
+	@PostMapping(value = "/insertCity", consumes = "application/json")
+	@ResponseBody
+	City insertCity(@RequestBody City city) {
+		testService.insertCity(city);
+		return city;
+	}
+
+	// ################################################################
+	@PutMapping(value = "/updateCity", consumes = "application/x-www-form-urlencoded")
+	@ResponseBody
+	City updateCity(@ModelAttribute City city) {
+		testService.updateCity(city);
+		return city;
+	}
+
+	// ################################################################
+	@DeleteMapping(value = "/deleteCity")
+	@ResponseBody
+	void deleteCity(@RequestParam int cityId) {
+		testService.deleteCity(cityId);
 	}
 }
